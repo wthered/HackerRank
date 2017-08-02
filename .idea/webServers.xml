@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c4223212-c457-445f-b6f8-58c816d5a83f" name="Ikaria" url="http://192.168.1.3">
+        <fileTransfer host="192.168.1.3" port="22" privateKey="$USER_HOME$/.ssh/ikaria" rootFolder="/home/wthered/sources/Java" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
