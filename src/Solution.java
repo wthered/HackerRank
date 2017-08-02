@@ -8,5 +8,6 @@ public class Solution {
         for(int i=0; i<many; i++) {
             System.out.printf("Can you count to " + i + "? ");
         }
+        input.close();
     }
 }
