@@ -6,7 +6,7 @@ public class Solution {
         Scanner input = new Scanner(System.in);
         int many = input.nextInt();
         for(int i=0; i<many; i++) {
-            System.out.printf("Can you count to " + i + "? ");
+            System.out.println("Can you count to " + i + "?");
         }
         input.close();
     }
