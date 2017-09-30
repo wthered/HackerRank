@@ -37,11 +37,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
+			show(terrain, n);
+			System.out.println("[West] Moving from (" + x + ",0) at time " + time);
 			// The Snake is at (x,y) and moves East
 			if(x == 0) {
-				moveEast(x + 1, y, n, time, terrain);
+				moveEast(1, 0, n, time, terrain);
 			} else {
-				moveEast(x - 1, y, n, time, terrain);
+				moveEast(n - 2, 0, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -55,11 +57,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
+			show(terrain, n);
+			System.out.println("[East] Moving from (" + x + "," + y + ") at time " + time);
 			// The snake is at (x,y) and moves West
-			if(x == n-1) {
-				moveWest(x - 1, y, n, time, terrain);
+			if(x == 0) {
+				moveWest(1, n-1, n, time, terrain);
 			} else {
-				moveWest(x + 1, y, n, time, terrain);
+				moveWest(n-2, n-1, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -73,11 +77,17 @@ public class Solution {
 		}
 
 		if(time < n * n) {
+			show(terrain, n);
+			System.out.println("[North] Moving from (" + x + "," + y + ") at time " + time);
 			//Start from (x,y) and go south
 			if(y == 0) {
-				moveSouth(x, y + 1, n, time, terrain);
+				moveSouth(0,1, n, time, terrain);
 			} else {
-				moveSouth(x, y - 1, n, time, terrain);
+				if(terrain[0][y+1] == 0) {
+					moveSouth(0, y + 1, n, time, terrain);
+				} else {
+					moveSouth(0, y - 1, n, time, terrain);
+				}
 			}
 		} else {
 			show(terrain, n);
@@ -91,11 +101,17 @@ public class Solution {
 		}
 
 		if(time < n * n) {
+			show(terrain, n);
+			System.out.println("[South] Moving from (" + x + "," + y + ") at time " + time);
 			//Start from (x,y) and go north
 			if(y == 0) {
-				moveNorth(n - 1, y + 1, n, time, terrain);
+				moveNorth(n - 1, 1, n, time, terrain);
 			} else {
-				moveNorth(n - 1, y - 1, n, time, terrain);
+				if(terrain[n-1][y-1] == 0) {
+					moveNorth(n - 1, y - 1, n, time, terrain);
+				} else {
+					moveNorth(n - 1, y + 1, n, time, terrain);
+				}
 			}
 		} else {
 			show(terrain, n);
@@ -105,7 +121,11 @@ public class Solution {
 	private static void show(int[][] terrain, int size) {
 		for(int i=0; i<size; i++) {
 			for(int j=0; j<size; j++) {
-				System.out.print(terrain[i][j] + "\t");
+				System.out.print("(" + i + "," + j + ",");
+				if(terrain[i][j] < 10) {
+					System.out.print("0");
+				}
+				System.out.print(terrain[i][j] + ")\t");
 			}
 			System.out.println();
 		}
