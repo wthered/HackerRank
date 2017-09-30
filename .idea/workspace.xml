@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3451cebc-740a-4112-9ce8-b3f93af3ecae" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Solution.java" afterPath="$PROJECT_DIR$/src/Solution.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -255,7 +254,7 @@
       <workItem from="1506598048485" duration="2384000" />
       <workItem from="1506613966211" duration="6635000" />
       <workItem from="1506691575107" duration="9274000" />
-      <workItem from="1506743650497" duration="26902000" />
+      <workItem from="1506743650497" duration="26912000" />
     </task>
     <task id="LOCAL-00001" summary="SNL">
       <created>1506771349754</created>
@@ -271,11 +270,18 @@
       <option name="project" value="LOCAL" />
       <updated>1506792781678</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="The Snake vs the Wind">
+      <created>1506796158745</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1506796158745</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60355000" />
+    <option name="totallyTimeSpent" value="60365000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1431" y="24" width="1299" height="744" extended-state="4" />
