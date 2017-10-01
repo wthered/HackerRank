@@ -13,19 +13,66 @@ public class Solution {
 
 		switch (d) {
 			case 'n':
-				moveNorth(x, y, n, 0, terrain);
+				if(x == 0) {
+					if(y == 0) {
+//						System.out.println("Moving East from (" + x + "," + y + ")");
+						moveEast(x, y, n, 0, terrain);
+					} else {
+//						System.out.println("Moving West from (" + x + "," + y + ")");
+						moveWest(x, y, n, 0, terrain);
+					}
+				} else {
+//					System.out.println("Moving North from (" + x + "," + y + ")");
+					moveNorth(x, y, n, 0, terrain);
+				}
 				break;
 			case 's':
-				moveSouth(x, y, n, 0, terrain);
+				if(x == n - 1) {
+					if(y == n - 1) {
+//						System.out.println("Moving West from (" + x + "," + y + ")");
+						moveWest(x, y, n, 0, terrain);
+					} else {
+//						System.out.println("Moving East from (" + x + "," + y + ")");
+						moveEast(x, y, n, 0, terrain);
+					}
+				} else {
+//					System.out.println("Moving South from (" + x + "," + y + ")");
+					moveSouth(x, y, n, 0, terrain);
+				}
 				break;
 			case 'e':
-				moveEast(x, y, n, 0, terrain);
+				if(y == n - 1) {
+					if(x == n -1) {
+						moveNorth(x, y, n, 0, terrain);
+					} else {
+						moveSouth(x, y, n, 0, terrain);
+					}
+				} else {
+					if(y == 0) {
+						moveEast(x, y, n, 0, terrain);
+					} else {
+						moveNorth(x, y, n, 0, terrain);
+					}
+				}
 				break;
 			case 'w':
-				moveWest(x, y, n, 0, terrain);
+				if(y == 0) {
+					if(x == 0) {
+						moveSouth(x, y, n, 0, terrain);
+					} else {
+						moveNorth(x, y, n, 0, terrain);
+					}
+				} else {
+					if(x == 0) {
+						moveWest(x, y, n, 0, terrain);
+					} else {
+						//System.out.println("Moving West from (" + x + "," + y + ")");
+						moveWest(x, y, n, 0, terrain);
+					}
+				}
 				break;
 			default:
-				moveNorth(0,0, n, 0, terrain);
+				moveEast(0,0, n, 0, terrain);
 				break;
 		}
 	}
@@ -37,13 +84,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
-			show(terrain, n);
-			System.out.println("[West] Moving from (" + x + ",0) at time " + time);
 			// The Snake is at (x,y) and moves East
-			if(x == 0) {
-				moveEast(1, 0, n, time, terrain);
+			if(x > 0 && terrain[x-1][0] == 0) {
+				// North East
+				moveEast(x - 1, 0, n, time, terrain);
 			} else {
-				moveEast(n - 2, 0, n, time, terrain);
+				// South East
+				moveEast(x + 1, 0, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -57,13 +104,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
-			show(terrain, n);
-			System.out.println("[East] Moving from (" + x + "," + y + ") at time " + time);
 			// The snake is at (x,y) and moves West
-			if(x == 0) {
-				moveWest(1, n-1, n, time, terrain);
+			if(x > 0 && terrain[x-1][n-1] == 0) {
+				// North West
+				moveWest(x - 1, n - 1, n, time, terrain);
 			} else {
-				moveWest(n-2, n-1, n, time, terrain);
+				// South West
+				moveWest(x + 1, n - 1, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -77,17 +124,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
-			show(terrain, n);
-			System.out.println("[North] Moving from (" + x + "," + y + ") at time " + time);
-			//Start from (x,y) and go south
-			if(y == 0) {
-				moveSouth(0,1, n, time, terrain);
+			// Start from (x,y) and go south
+			if(y > 0 && terrain[0][y-1] == 0) {
+				// South East ->
+				moveSouth(0, y - 1, n, time, terrain);
 			} else {
-				if(terrain[0][y+1] == 0) {
-					moveSouth(0, y + 1, n, time, terrain);
-				} else {
-					moveSouth(0, y - 1, n, time, terrain);
-				}
+				// South West ->
+				moveSouth(0, y + 1, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -101,17 +144,13 @@ public class Solution {
 		}
 
 		if(time < n * n) {
-			show(terrain, n);
-			System.out.println("[South] Moving from (" + x + "," + y + ") at time " + time);
 			//Start from (x,y) and go north
-			if(y == 0) {
-				moveNorth(n - 1, 1, n, time, terrain);
+			if(y > 0 && terrain[n-1][y-1] == 0) {
+				// North East
+				moveNorth(n - 1, y - 1, n, time, terrain);
 			} else {
-				if(terrain[n-1][y-1] == 0) {
-					moveNorth(n - 1, y - 1, n, time, terrain);
-				} else {
-					moveNorth(n - 1, y + 1, n, time, terrain);
-				}
+				// North West <-
+				moveNorth(n - 1, y + 1, n, time, terrain);
 			}
 		} else {
 			show(terrain, n);
@@ -121,11 +160,7 @@ public class Solution {
 	private static void show(int[][] terrain, int size) {
 		for(int i=0; i<size; i++) {
 			for(int j=0; j<size; j++) {
-				System.out.print("(" + i + "," + j + ",");
-				if(terrain[i][j] < 10) {
-					System.out.print("0");
-				}
-				System.out.print(terrain[i][j] + ")\t");
+				System.out.print(terrain[i][j] + "\t");
 			}
 			System.out.println();
 		}
