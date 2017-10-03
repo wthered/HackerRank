@@ -1,168 +1,63 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Solution {
+	public static void main(String args[] ) throws Exception {
+        Scanner input = new Scanner(System.in);
+        int t = input.nextInt();
+        ArrayList<Integer> chocolates = new ArrayList<>();
+        for(int i=0; i<t; i++) {
+        	int n = input.nextInt();
+        	int min = 1024;
+        	int max = 0;
+        	int minIndex = n;
+        	int maxIndex = 0;
+        	int[] chocos = new int[n];
+        	for(int c=0; c<n; c++) {
+        		chocos[c] = input.nextInt();
+        		if(chocos[c] < min) { min = chocos[c]; minIndex = c; }
+        		if(chocos[c] > max) { max = chocos[c]; maxIndex = c; }
+	        }
+	        chocolates.add(share(chocos, minIndex, maxIndex));
+        }
+        input.close();
 
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		int n = in.nextInt();
-		char d = in.next().charAt(0);
-		int x = in.nextInt();
-		int y = in.nextInt();
-		in.close();
-		int[][] terrain = new int[n][n];
+		for (Integer chocolate : chocolates) {
+			System.out.println("She gave at " + chocolate + " rounds");
+		}
+	}
 
-		switch (d) {
-			case 'n':
-				if(x == 0) {
-					if(y == 0) {
-//						System.out.println("Moving East from (" + x + "," + y + ")");
-						moveEast(x, y, n, 0, terrain);
-					} else {
-//						System.out.println("Moving West from (" + x + "," + y + ")");
-						moveWest(x, y, n, 0, terrain);
-					}
-				} else {
-//					System.out.println("Moving North from (" + x + "," + y + ")");
-					moveNorth(x, y, n, 0, terrain);
+	private static int share(int[] choco, int minIndex, int maxIndex) {
+		int iterations = 0;
+		int give;
+		int tmpMin;
+		int tmpMax;
+		while(choco[minIndex] != choco[maxIndex] && iterations < 1024) {
+			tmpMin = choco[minIndex];
+			tmpMax = choco[maxIndex];
+			give = christy(tmpMin, tmpMax);
+			for (int i = 0; i < choco.length; i++) {
+				if (i != maxIndex) {
+					choco[i] += give;
 				}
-				break;
-			case 's':
-				if(x == n - 1) {
-					if(y == n - 1) {
-//						System.out.println("Moving West from (" + x + "," + y + ")");
-						moveWest(x, y, n, 0, terrain);
-					} else {
-//						System.out.println("Moving East from (" + x + "," + y + ")");
-						moveEast(x, y, n, 0, terrain);
-					}
-				} else {
-//					System.out.println("Moving South from (" + x + "," + y + ")");
-					moveSouth(x, y, n, 0, terrain);
-				}
-				break;
-			case 'e':
-				if(y == n - 1) {
-					if(x == n -1) {
-						moveNorth(x, y, n, 0, terrain);
-					} else {
-						moveSouth(x, y, n, 0, terrain);
-					}
-				} else {
-					if(y == 0) {
-						moveEast(x, y, n, 0, terrain);
-					} else {
-						moveNorth(x, y, n, 0, terrain);
-					}
-				}
-				break;
-			case 'w':
-				if(y == 0) {
-					if(x == 0) {
-						moveSouth(x, y, n, 0, terrain);
-					} else {
-						moveNorth(x, y, n, 0, terrain);
-					}
-				} else {
-					if(x == 0) {
-						moveWest(x, y, n, 0, terrain);
-					} else {
-						//System.out.println("Moving West from (" + x + "," + y + ")");
-						moveWest(x, y, n, 0, terrain);
-					}
-				}
-				break;
-			default:
-				moveEast(0,0, n, 0, terrain);
-				break;
+				if(choco[i] > tmpMax) { maxIndex = i; tmpMax = choco[maxIndex]; }
+			}
+			System.out.println("Min = " + choco[minIndex] + "\tMax = " + choco[maxIndex] + "\tGive = " + give);
+			show(choco);
+			iterations++;
 		}
+		return iterations;
 	}
 
-	private static void moveWest(int x, int y, int n, int time, int[][] terrain) {
-		for(int j=y; j>=0; j--) {
-			time++;
-			terrain[x][j] = time;
-		}
-
-		if(time < n * n) {
-			// The Snake is at (x,y) and moves East
-			if(x > 0 && terrain[x-1][0] == 0) {
-				// North East
-				moveEast(x - 1, 0, n, time, terrain);
-			} else {
-				// South East
-				moveEast(x + 1, 0, n, time, terrain);
-			}
-		} else {
-			show(terrain, n);
-		}
+	private static int christy(int min, int max) {
+		if(max - min >= 5) { return 5; }
+		if(max - min >= 2) { return 2; }
+		return 1;
 	}
 
-	private static void moveEast(int x, int y, int n, int time, int[][] terrain) {
-		for(int j=y; j<n; j++) {
-			time++;
-			terrain[x][j] = time;
-		}
-
-		if(time < n * n) {
-			// The snake is at (x,y) and moves West
-			if(x > 0 && terrain[x-1][n-1] == 0) {
-				// North West
-				moveWest(x - 1, n - 1, n, time, terrain);
-			} else {
-				// South West
-				moveWest(x + 1, n - 1, n, time, terrain);
-			}
-		} else {
-			show(terrain, n);
-		}
-	}
-
-	private static void moveNorth(int x, int y, int n, int time, int[][] terrain) {
-		for(int i=x; i>=0; i--) {
-			time++;
-			terrain[i][y] = time;
-		}
-
-		if(time < n * n) {
-			// Start from (x,y) and go south
-			if(y > 0 && terrain[0][y-1] == 0) {
-				// South East ->
-				moveSouth(0, y - 1, n, time, terrain);
-			} else {
-				// South West ->
-				moveSouth(0, y + 1, n, time, terrain);
-			}
-		} else {
-			show(terrain, n);
-		}
-	}
-
-	private static void moveSouth(int x, int y, int n, int time, int[][] terrain) {
-		for(int i=0; i<n; i++) {
-			time++;
-			terrain[i][y] = time;
-		}
-
-		if(time < n * n) {
-			//Start from (x,y) and go north
-			if(y > 0 && terrain[n-1][y-1] == 0) {
-				// North East
-				moveNorth(n - 1, y - 1, n, time, terrain);
-			} else {
-				// North West <-
-				moveNorth(n - 1, y + 1, n, time, terrain);
-			}
-		} else {
-			show(terrain, n);
-		}
-	}
-
-	private static void show(int[][] terrain, int size) {
-		for(int i=0; i<size; i++) {
-			for(int j=0; j<size; j++) {
-				System.out.print(terrain[i][j] + "\t");
-			}
-			System.out.println();
+	private static void show(int[] block) {
+		for (int chocolate : block) {
+			System.out.print(chocolate + "\t");
 		}
 	}
 }
