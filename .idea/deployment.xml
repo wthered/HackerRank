@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="PublishConfigData" autoUpload="Always" serverName="Digital Ocean" traceLevel="DETAILS" uploadOnCheckin="a0da5df7-9823-4342-a03b-3e9a90d25097">
+    <serverData>
+      <paths name="Digital Ocean">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
     <option name="myUploadOnCheckinName" value="Digital Ocean" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
